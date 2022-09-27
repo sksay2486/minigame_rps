@@ -23,9 +23,9 @@
                 </div>
             </div>
             <div class="select-div">
-                <img class="rps-image" src="./images/scissors.png" onclick="showSelectedValue('scissors');com_result();rps_result();" alt="scissors" />
-                <img class="rps-image" src="./images/rock.png" onclick="showSelectedValue('rock');com_result();rps_result();" alt="rock" />
-                <img class="rps-image" src="./images/paper.png" onclick="showSelectedValue('paper');com_result();rps_result();" alt="paper" />
+                <img class="rps-image" src="./images/scissors.png" onclick="rpsStart(0)" />
+                <img class="rps-image" src="./images/rock.png" onclick="rpsStart(1)" />
+                <img class="rps-image" src="./images/paper.png" onclick="rpsStart(2)" />
             </div>
         </div>
         <script>
@@ -33,92 +33,71 @@
                 const userSelectedImage = document.getElementById('userSelectedImg');
                 const result = Math.floor(Math.random() * 3);
 
-                // const src = result === 0 ? './images/scissors.png' : result === 1 ? './images/rock.png' : './images/paper.png';
-                // const alt = result === 0 ? 'scissors' : result === 1 ? 'rock' : 'paper';
+                // userSelectedImage.src = result === 0 ? './images/scissors.png' : result === 1 ? './images/rock.png' : './images/paper.png';
 
-                // userSelectedImage.src = src;
-                // userSelectedImage.alt = alt;
-
-                if(result === 0) {
-                    userSelectedImage.src = './images/scissors.png';
-                    userSelectedImage.alt = 'scissors';
-                }
-                else if(result === 1) {
-                    userSelectedImage.src = './images/rock.png';
-                    userSelectedImage.alt = 'rock';
-                }
-                else if(result === 2) {
-                    userSelectedImage.src = './images/paper.png';
-                    userSelectedImage.alt = 'paper';
-                }
+                if(result === 0) userSelectedImage.src = './images/scissors.png';
+                else if(result === 1) userSelectedImage.src = './images/rock.png';
+                else if(result === 2) userSelectedImage.src = './images/paper.png';
 
                 userSelectedImage.style.width = '150px';
                 userSelectedImage.style.height = '150px';
+
+                return result;
             }
 
             const showSelectedValue = (selectedValue) => {
                 const mySelectedImage = document.getElementById('mySelectedImg');
 
-                // const src = selectedValue === 'scissors' ? './images/scissors.png' : selectedValue === 'rock' ? './images/rock.png' : './images/paper.png';
-                // const alt = selectedValue === 'scissors' ? 'scissors' : selectedValue === 'rock' ? 'rock' : 'paper';
+                // mySelectedImage.src = selectedValue === 'scissors' ? './images/scissors.png' : selectedValue === 'rock' ? './images/rock.png' : './images/paper.png';
 
-                // mySelectedImage.src = src;
-                // mySelectedImage.alt = alt;
-
-                if(selectedValue === 'scissors') {
-                    mySelectedImage.src = './images/scissors.png';
-                    mySelectedImage.alt = 'scissors';
-                }
-                else if(selectedValue === 'rock') {
-                    mySelectedImage.src = './images/rock.png';
-                    mySelectedImage.alt = 'rock';
-                }
-                else if(selectedValue === 'paper') {
-                    mySelectedImage.src = './images/paper.png';
-                    mySelectedImage.alt = 'paper';
-                }
+                if(selectedValue === 0) mySelectedImage.src = './images/scissors.png';
+                else if(selectedValue === 1) mySelectedImage.src = './images/rock.png';
+                else if(selectedValue === 2) mySelectedImage.src = './images/paper.png';
 
                 mySelectedImage.style.width = '150px';
                 mySelectedImage.style.height = '150px';
             }
 
-            const rps_result = () => {
-                const mySelectedImage = document.getElementById('mySelectedImg');
+            const rps_result = (userRes, myRes) => {
                 const mySelectedDiv = document.getElementById('mySelectedDiv');
-
-                const userSelectedImage = document.getElementById('userSelectedImg');
                 const userSelectedDiv = document.getElementById('userSelectedDiv');
 
-                if(mySelectedImage.alt === userSelectedImage.alt) {
+                if(myRes === userRes) {
                     mySelectedDiv.innerText = '무승부';
                     userSelectedDiv.innerText = '무승부';
                 }
                 else {
-                    if(mySelectedImage.alt === 'scissors' && userSelectedImage.alt === 'rock') {
+                    if(myRes === 0 && userRes === 1) {
                         mySelectedDiv.innerText = '졌다';
                         userSelectedDiv.innerText = '이겼다';
                     }
-                    else if(mySelectedImage.alt === 'scissors' && userSelectedImage.alt === 'paper') {
+                    else if(myRes === 0 && userRes === 2) {
                         mySelectedDiv.innerText = '이겼다';
                         userSelectedDiv.innerText = '졌다';
                     }
-                    else if(mySelectedImage.alt === 'rock' && userSelectedImage.alt === 'paper') {
+                    else if(myRes === 1 && userRes === 2) {
                         mySelectedDiv.innerText = '졌다';
                         userSelectedDiv.innerText = '이겼다';
                     }
-                    else if(mySelectedImage.alt === 'rock' && userSelectedImage.alt === 'scissors') {
+                    else if(myRes === 1 && userRes === 0) {
                         mySelectedDiv.innerText = '이겼다';
                         userSelectedDiv.innerText = '졌다';
                     }
-                    else if(mySelectedImage.alt === 'paper' && userSelectedImage.alt === 'scissors') {
+                    else if(myRes === 2 && userRes === 0) {
                         mySelectedDiv.innerText = '졌다';
                         userSelectedDiv.innerText = '이겼다';
                     }
-                    else if(mySelectedImage.alt === 'paper' && userSelectedImage.alt === 'rock') {
+                    else if(myRes === 2 && userRes === 1) {
                         mySelectedDiv.innerText = '이겼다';
                         userSelectedDiv.innerText = '졌다';
                     }
                 }
+            }
+
+            const rpsStart = (selectedValue) => {
+                const result = com_result();
+                showSelectedValue(selectedValue);
+                rps_result(result, selectedValue);
             }
         </script>
     </body>
